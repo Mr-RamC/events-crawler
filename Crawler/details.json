@@ -1,0 +1,27 @@
+{
+	"eventBriteApi": {
+		"token":"RAD7HQSNEWM7KHTCGXBJ"
+		,"url":"https://www.eventbriteapi.com/v3"
+		,"cities":["delhi","bangalore"]
+	},
+	"eventfulApi": {
+		"token":"nsF2W2dbmGtJpmpQ"
+		,"url":"http://api.eventful.com/json"
+		,"cities":["delhi","bangalore"]
+	},
+	"meetupApi": {
+		"token":"7ca45675c776612606c2d497f344c6e"
+		,"url":"https://api.meetup.com/2"
+		,"cities":["delhi","bangalore"]
+	},
+	"startupsclub":{
+		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
+		,"url":"https://api.import.io"
+		,"cities":["delhi","bangalore"]
+	},
+	"eventsHigh":{
+		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
+		,"url":"https://api.import.io"
+		,"cities":["delhi","bangalore"]
+	}
+}

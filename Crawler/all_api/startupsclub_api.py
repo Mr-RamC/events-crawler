@@ -37,6 +37,9 @@ for city in cities:
 	elif city in ("Visakhapatnam","visakhapatnam","vizag","Vizag"):
 	  	search_char1="Vizag"
 	  	search_char2="VIZAG"
+	elif city in ("Delhi","delhi"):
+		search_char1="DEL"
+	  	search_char2="Delhi"
 	else:
 		time.sleep(5)
 	  	print "This City Data is not available!!!"

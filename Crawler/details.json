@@ -23,5 +23,10 @@
 		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
 		,"url":"https://api.import.io"
 		,"cities":["delhi","bangalore"]
+	},
+	"allevents":{
+		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
+		,"url":"https://api.import.io"
+		,"cities":["jaipur","bangalore"]
 	}
 }

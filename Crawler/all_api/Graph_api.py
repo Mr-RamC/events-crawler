@@ -90,9 +90,9 @@ for city in cities:
           events.append(dic)
     print "=================================="+str(j)+"=========================="
     time.sleep(5)    
-    with open('events_'+city+'_meetup.json', 'w') as outfile:
+    with open('events_'+city+'_Graph.json', 'w') as outfile:
       json.dump(events, outfile,ensure_ascii=False)
     print "==================="+city+"=========================="
-    with open('events_'+city+'_meetup.json') as data_file:    
+    with open('events_'+city+'_Graph.json') as data_file:    
       d = json.load(data_file)
     pprint(d)  

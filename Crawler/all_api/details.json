@@ -15,22 +15,22 @@
 		,"cities":["delhi","bangalore"]
 	},
 	"startupsclub":{
-		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
+		"token":"e21baf75c60547a68ff6e64c7a64cbc8d220dccdf3089a4f552ea04f76e5b4aaef6a3f69db0089a8c17c98c6b7568b6af2d3bafa02822ae7623324039dcd99fada2c5371a118adcbbfda7921703594bf"
 		,"url":"https://api.import.io"
 		,"cities":["delhi","bangalore"]
 	},
 	"eventsHigh":{
-		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
+		"token":"e21baf75c60547a68ff6e64c7a64cbc8d220dccdf3089a4f552ea04f76e5b4aaef6a3f69db0089a8c17c98c6b7568b6af2d3bafa02822ae7623324039dcd99fada2c5371a118adcbbfda7921703594bf"
 		,"url":"https://api.import.io"
 		,"cities":["delhi","bangalore"]
 	},
 	"allevents":{
-		"token":"a10493dd32644b7f8af59ac8e23bde970b7e6c73d0281d243ab471fe70090a7715523457d30adf85fa1d35a2915847047efcd064d4c9b33ea08591df0e39978d448cc44ef4c38cdd265bec3f1f0e2c21"
+		"token":"e21baf75c60547a68ff6e64c7a64cbc8d220dccdf3089a4f552ea04f76e5b4aaef6a3f69db0089a8c17c98c6b7568b6af2d3bafa02822ae7623324039dcd99fada2c5371a118adcbbfda7921703594bf"
 		,"url":"https://api.import.io"
 		,"cities":["jaipur","bangalore"]
 	},
 	"Graph_Api":{
-		"token":""
+		"token":"EAAD47HwyXVQBAJwjj4RoZCuGma1FElZBwvpzC0zRQP5ssz1ZC6V9ZC6zbclNR8IgzXijvz8jkLPNurfrPzZCkjsf6r3iV2miSGguZAmHoXwbQYZAGRxZBILZBVvfBvcFcTBSZAwDsiadBmEPOaLfiE8bp3x8SWEjyq4BVB8t7R8HRAwgZDZD"
 		,"url":"https://graph.facebook.com/v2.6"
 		,"cities":["jaipur","bangalore"]
 	}

@@ -11,7 +11,7 @@ with open('details.json') as basic_details:
   token=d['eventfulApi']['token']
   api_url=d['eventfulApi']['url']
 print cities  
-
+maindic_eventful={}
 for city in cities:
   events=[]
   url = api_url+'/events/search?...&location='+city+'&date=Next week&app_key='+token+'&page_size=100&sort_order=date'
@@ -136,14 +136,9 @@ for city in cities:
       dic['eventLink']=dic['eventLink'].encode('ascii','ignore')
       dic['locationName']=dic['locationName'].encode('ascii','ignore')
       events.append(dic)
-      with open('events_'+city+'_eventful.json', 'w') as outfile:
-        json.dump(events, outfile,ensure_ascii=False)
-      print "==================="+city+"=========================="
-      with open('events_'+city+'_eventful.json') as data_file:    
-        d = json.load(data_file)
-      pprint(d)       
-
-        
+      maindic_eventful[city]=events
+      with open('events_eventful.json', 'w') as outfile:
+        json.dump(maindic_eventful, outfile,ensure_ascii=False)
 
     else:
       for i in range(noofdata):
@@ -253,11 +248,8 @@ for city in cities:
         dic['eventLink']=dic['eventLink'].encode('ascii','ignore')
         dic['locationName']=dic['locationName'].encode('ascii','ignore')
         events.append(dic)
-      with open('events_'+city+'_eventful.json', 'w') as outfile:
-        json.dump(events, outfile,ensure_ascii=False)
-      print "==================="+city+"=========================="
-      with open('events_'+city+'_eventful.json') as data_file:    
-        d = json.load(data_file)
-      pprint(d)  
+        maindic_eventful[city]=events
+      with open('events_eventful.json', 'w') as outfile:
+        json.dump(maindic_eventful, outfile,ensure_ascii=False)
   except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
     print 0

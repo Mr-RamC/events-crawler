@@ -12,7 +12,7 @@ with open('details.json') as basic_details:
 	token=d['startupsclub']['token']
 	api_url=d['startupsclub']['url']
 print cities 
-
+maindic_startupsclub={}
 for city in cities:
 	events=[]
 
@@ -45,7 +45,7 @@ for city in cities:
 	  	print "This City Data is not available!!!"
 	  	continue				
 
-	url = api_url+'/store/connector/_magic?url=http://startupsclub.org/startupsclubevents/&_apikey='+token
+	url = api_url+'/store/connector/_magic?url=http://startupsclub.org/startupsclubevents&_apikey='+token
 	url=url.replace(' ','%20')
 	try:
 	    json_obj = urllib2.urlopen(url)
@@ -84,10 +84,13 @@ for city in cities:
 		       		address=None
 		       		description=None
 
+		       	if str_date:
+		       		str_date=datetime.datetime.strptime(str_date,"%d %b %Y")
+		        if str_time:
+		        	str_time=datetime.datetime.strptime(str_time, "%I:%M %p")
 
-
-		        dic['str_date'] = str_date
-		        dic['str_time']=str_time
+		        dic['str_date'] = str(str_date)[:10]
+		        dic['str_time']=str(str_time)[11:]
 
 		        dic['name']=data['tables'][0]['results'][i]['link/_text']
 		        dic['image']=None
@@ -103,15 +106,13 @@ for city in cities:
 
 		        dic['locationName']=dic['locationName'].encode('ascii','ignore')
 		        events.append(dic)
+		        maindic_startupsclub[city]=events
 	except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
   		print 0  		        
 	if j==0:
 		print "No Events Available Right now for "+city
 	else:
 		print "==================== "+str(j)+"======================="
-	with open('events_'+city+'_startupsclub.json', 'w') as outfile:
-		json.dump(events, outfile,ensure_ascii=False)
-	print "==================="+city+"=========================="
-	with open('events_'+city+'_startupsclub.json') as data_file:
-		d = json.load(data_file)
-		pprint(d)          
+	print "==================="+city+"startupsclub =========================="	
+with open('events_startupsclub.json', 'w') as outfile:
+	json.dump(events, outfile,ensure_ascii=False)

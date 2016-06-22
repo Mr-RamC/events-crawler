@@ -13,7 +13,7 @@ with open('details.json') as basic_details:
 	token=d['allevents']['token']
 	api_url=d['allevents']['url']
 print cities 
-
+maindic_allevents={}
 for city in cities:
 	events=[]
 	j=0
@@ -84,10 +84,20 @@ for city in cities:
 		        	image_link=data['tables'][0]['results'][i]['lazy_image']
 		        else:
 		        	image_link=None
-		        dic['str_time']=start_time
-		        dic['str_date']=start_date
+		        if start_date:
+		       		str_date=datetime.datetime.strptime(start_date,"%a %b %d %Y")
+		        if start_time:
+		        	str_time=datetime.datetime.strptime(start_time, "%I:%M %p")
+		   
+		        if stop_date:
+		        	stop_date=stop_date.split("to")
+		        	stop_date=datetime.datetime.strptime(stop_date[1], " %a %b %d %Y")
+		        if stop_time:
+		        	stop_time=datetime.datetime.strptime(stop_time, "%H:%M %p")	
+		        dic['str_time']=str_time
+		        dic['str_date']=str_date
 		        dic['stop_date']=stop_date
-		        dic['stop_time']=stop_time	
+		        dic['stop_time']=stop_time
 		        dic['image']=image_link
 		        dic['description']=description
 		        dic['eventLink']=link
@@ -103,6 +113,7 @@ for city in cities:
 		        if j==50:
 		        	break	
 		        events.append(dic)
+		        maindic_allevents[city]=events
 
 
 		except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
@@ -111,9 +122,6 @@ for city in cities:
 		print "No Events Available Right now for "+city
 	else:
 		print "==================== "+str(j)+"======================="
-	with open('events_'+city+'_allevents.json', 'w') as outfile:
-		json.dump(events, outfile,ensure_ascii=False)
-	print "==================="+city+"=========================="
-	with open('events_'+city+'_allevents.json') as data_file:
-		d = json.load(data_file)
-		pprint(d)          
+	print "==================="+city+" allevents =========================="	
+with open('events__allevents.json', 'w') as outfile:
+	json.dump(maindic_allevents, outfile,ensure_ascii=False)

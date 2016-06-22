@@ -12,7 +12,7 @@ with open('details.json') as basic_details:
   token=d['meetupApi']['token']
   api_url=d['meetupApi']['url']
 print cities  
-
+maindic_meetup={}
 for city in cities:
   events=[]
   url = api_url+'/open_events?city='+city+'&country=in&time=,2w&key='+token+'&text_format=plain&page=200&offset=0'
@@ -104,11 +104,9 @@ for city in cities:
       dic['eventLink']=dic['eventLink'].encode('ascii','ignore')
       dic['locationName']=dic['locationName'].encode('ascii','ignore')
       events.append(dic)
-    with open('events_'+city+'_meetup.json', 'w') as outfile:
-      json.dump(events, outfile,ensure_ascii=False)
-    print "==================="+city+"=========================="
-    with open('events_'+city+'_meetup.json') as data_file:    
-      d = json.load(data_file)
-    pprint(d)  
+      maindic_meetup[city]=events
   except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
     print 0
+  print "==================="+city+" meetup =========================="  
+with open('events_meetup.json', 'w') as outfile:
+  json.dump(maindic_meetup, outfile,ensure_ascii=False)

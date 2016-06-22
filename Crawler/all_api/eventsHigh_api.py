@@ -13,7 +13,7 @@ with open('details.json') as basic_details:
 	token=d['eventsHigh']['token']
 	api_url=d['eventsHigh']['url']
 print cities 
-
+maindic_eventsHigh={}
 for city in cities:
 	events=[]
 
@@ -22,7 +22,7 @@ for city in cities:
 	elif city in ("mumbai","Mumbai"):
 	  	search_char="mumbai"
 	elif city in ("Chennai","chennai"):
-	  	search_char2="chennai"
+	  	search_char="chennai"
 	elif city in ("Delhi","delhi"):
 		search_char="delhi"
 	else:
@@ -31,7 +31,6 @@ for city in cities:
 	  	continue				
 
 	url = api_url+'/store/connector/_magic?url=https://www.eventshigh.com/'+search_char+'/featured&_apikey='+token
-	url=url.replace(' ','%20')
 	try:
 	    json_obj = urllib2.urlopen(url)
 	    data = json.load(json_obj)
@@ -46,26 +45,59 @@ for city in cities:
 	        	date=str_date.split(",")
 	        else:
 	        	str_date=None
+	        if '-' in date[1]:
+	        	flag=1
+	        	new_date=date[1].split("-")
+	        	start_date=new_date[0]
+	        	start_time=date[2]
+	        	end_date=new_date[1]
+	        else:
+	        	flag=0
+	        	start_date=date[1]
+	        	start_time=date[2]
+	        	end_date=None	
 	        if 'action_link/_text' in data['tables'][0]['results'][i]:
 	        	descriptions=data['tables'][0]['results'][i]['action_link/_text']
 	        	if descriptions=="Book Tickets":
 	        		link=data['tables'][0]['results'][i]['action_link']
+	        		link=link.encode('utf8')
 	        		dic['isReservationRequired']=True
 	        		description="To book tickets and more details go to "+link
+	        		description=description.decode('utf-8')
 	       		else:
 	       			link=data['tables'][0]['results'][i]['action_link']
+	       			link=link.encode('ascii','ignore')
+	       			link=link.encode('utf8')
 	       			description="To book tickets and more details go to "+link
+	       			description=description.decode('utf-8')
 	       			dic['isReservationRequired']=False
 	       	else:
 	       		dic['isReservationRequired']="Unknown"
 	       		description=None
 	       	if date:
-	       		dic['str_date'] = date[1]
-	       		dic['str_time']=date[2]
+	       		if start_date:
+	       			try:
+	       				start_date=datetime.datetime.strptime(start_date," %d %B %Y ")
+	       			except ValueError:
+	       				start_date=datetime.datetime.strptime(start_date," %d %b %Y ")	
+		        if start_time:
+		        	start_time=datetime.datetime.strptime(start_time, " %I:%M%p")
+		        if end_date:
+		        	try:
+		        		end_date=datetime.datetime.strptime(end_date," %d %B %Y ")
+		        	except ValueError:
+		        		end_date=datetime.datetime.strptime(end_date," %d %b %Y ")	
+	       		dic['str_date'] = str(start_date)[:10]
+	       		dic['str_time']=str(start_time)[11:]
+	       		dic['end_date']=str(end_date)[:10]
 	       	else:
 	       		dic['str_date']=None
 	       		dic['str_time']=None
-	        dic['name']=data['tables'][0]['results'][i]['action_link/_title']
+	       	if 'action_link/_title' in data['tables'][0]['results'][i]:
+	       		dic['name']=data['tables'][0]['results'][i]['action_link/_title']
+	       		dic['name']=dic['name'].encode('ascii','ignore')
+	       	else:
+	       		dic['name']=None	
 	        if 'capitalize_link/_text' in data['tables'][0]['results'][i]:
 	        	address=data['tables'][0]['results'][i]['capitalize_link/_text']+" "+city
 	        else:
@@ -80,30 +112,26 @@ for city in cities:
 	        	category=category.encode('ascii','ignore')
 	        	categories.append(category)
 	        dic['category']=categories
-	        address=address.encode('ascii','ignore')
-	        description=description.encode('ascii','ignore')
 	        dic['locationName']=address
-	        r = urllib2.urlopen(link).read()
-	        soup = BeautifulSoup(r,'html.parser')
-	        img = soup.find("div", class_="details-non-blur-image-container no-crop")
-	        image_link=img.a["href"]
+#	       	r = urllib2.urlopen(link).read()
+#	        soup = BeautifulSoup(r,'html.parser')
+#	        img = soup.find("div", class_="details-non-blur-image-container no-crop")
+#	        image_link=img.a["href"]
+
+	        image_link=None
 	        dic['image']=image_link
 	        dic['description']=description
 	        dic['eventLink']=link
-	        dic['name']=dic['name'].encode('ascii','ignore')
 	        dic['eventLink']=dic['eventLink'].encode('ascii','ignore')
-
 	        dic['locationName']=dic['locationName'].encode('ascii','ignore')
 	        events.append(dic)
+	        maindic_eventsHigh[city]=events
 	except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
   		print 0  		        
 	if j==0:
 		print "No Events Available Right now for "+city
 	else:
 		print "==================== "+str(j)+"======================="
-	with open('events_'+city+'_eventsHigh.json', 'w') as outfile:
-		json.dump(events, outfile,ensure_ascii=False)
-	print "==================="+city+"=========================="
-	with open('events_'+city+'_eventsHigh.json') as data_file:
-		d = json.load(data_file)
-		pprint(d)          
+	print "==================="+city+" eventshigh =========================="	
+with open('events_eventsHigh.json', 'w') as outfile:
+	json.dump(maindic_eventsHigh, outfile,ensure_ascii=False)     

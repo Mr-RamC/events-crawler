@@ -3,15 +3,13 @@ import json
 import httplib
 from pprint import pprint
 
-
-cities=[]
 with open('details.json') as basic_details:    
   d = json.load(basic_details)
   cities=d['eventBriteApi']['cities']
   token=d['eventBriteApi']['token']
   api_url=d['eventBriteApi']['url']
 print cities 
-
+maindic_eventBrite={}
 for city in cities:
   events=[]
   url1 = api_url+'/events/search/?token='+token+'&venue.city='+city+'&sort_by=date'
@@ -85,11 +83,10 @@ for city in cities:
       dic['name']=dic['name'].encode('ascii','ignore')
       dic['eventLink']=dic['eventLink'].encode('ascii','ignore')
       events.append(dic)
-    with open('events_'+city+'_eventBrite.json', 'w') as outfile:
-      json.dump(events, outfile,ensure_ascii=False)
-    print "==================="+city+"=========================="
-    with open('events_'+city+'_eventBrite.json') as data_file:    
-      d = json.load(data_file)
-    pprint(d)  
+      maindic_eventBrite[city]=events
   except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
     print 0
+  print "==================="+city+" eventBrite =========================="    
+with open('events_eventBrite.json', 'w') as outfile:
+  json.dump(maindic_eventBrite, outfile,ensure_ascii=False)
+

@@ -14,7 +14,7 @@ with open('details.json') as basic_details:
   token=d['Graph_Api']['token']
   api_url=d['Graph_Api']['url']
 print cities  
-
+maindic_Graph={}
 for city in cities:
     events=[]
     j=0
@@ -53,10 +53,10 @@ for city in cities:
           dic['end_time']=None
         if start_date:
         	dic['str_date'] = start_date[0]
-        	dic['str_time'] = start_date[1]
+        	dic['str_time'] = start_date[1][:8]
         if stop_date:
         	dic['stop_date']=stop_date[0]
-        	dic['stop_time']=stop_date[1]
+        	dic['stop_time']=stop_date[1][:8]
 
         dic['name']=data['data'][i]['name']
         if description!=None:
@@ -88,11 +88,8 @@ for city in cities:
         if time_compare>date_object and date_object>=time_now:
           j=j+1
           events.append(dic)
+          maindic_Graph[city]=events
     print "=================================="+str(j)+"=========================="
     time.sleep(5)    
-    with open('events_'+city+'_Graph.json', 'w') as outfile:
-      json.dump(events, outfile,ensure_ascii=False)
-    print "==================="+city+"=========================="
-    with open('events_'+city+'_Graph.json') as data_file:    
-      d = json.load(data_file)
-    pprint(d)  
+with open('events_Graph.json', 'w') as outfile:
+  json.dump(events, outfile,ensure_ascii=False)

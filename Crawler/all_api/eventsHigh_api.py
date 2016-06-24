@@ -60,14 +60,13 @@ for city in cities:
 	        	descriptions=data['tables'][0]['results'][i]['action_link/_text']
 	        	if descriptions=="Book Tickets":
 	        		link=data['tables'][0]['results'][i]['action_link']
-	        		link=link.encode('utf8')
+	        		link=link.encode('ascii','ignore')
 	        		dic['isReservationRequired']=True
 	        		description="To book tickets and more details go to "+link
 	        		description=description.decode('utf-8')
 	       		else:
 	       			link=data['tables'][0]['results'][i]['action_link']
 	       			link=link.encode('ascii','ignore')
-	       			link=link.encode('utf8')
 	       			description="To book tickets and more details go to "+link
 	       			description=description.decode('utf-8')
 	       			dic['isReservationRequired']=False
@@ -118,16 +117,19 @@ for city in cities:
 #	        img = soup.find("div", class_="details-non-blur-image-container no-crop")
 #	        image_link=img.a["href"]
 
-	        image_link=None
+	        image_link="https://www.eventshigh.com/assets/images/logor.png"
 	        dic['image']=image_link
 	        dic['description']=description
 	        dic['eventLink']=link
-	        dic['eventLink']=dic['eventLink'].encode('ascii','ignore')
 	        dic['locationName']=dic['locationName'].encode('ascii','ignore')
 	        events.append(dic)
 	        maindic_eventsHigh[city]=events
-	except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
-  		print 0  		        
+	except httplib.BadStatusLine:
+		print 0
+	except urllib2.HTTPError:
+		print 0
+	except urllib2.URLError:
+		print 0
 	if j==0:
 		print "No Events Available Right now for "+city
 	else:

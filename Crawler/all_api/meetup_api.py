@@ -39,6 +39,8 @@ for city in cities:
         end_date=None  
 
       no_people=data['results'][i]['yes_rsvp_count']
+      if no_people<10:
+        continue
       if 'description' in data['results'][i]:
         description=data['results'][i]['description']
         description=description.encode('ascii','ignore')
@@ -67,7 +69,7 @@ for city in cities:
       if 'photo_url' in data['results'][i]:
         dic['image']=data['results'][i]['photo_url']
       else:
-        dic['image']=None
+        dic['image']="http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg"
       if description!=None:
         if description.find("registration")==-1:
           dic['isReservationRequired']=False
@@ -105,7 +107,11 @@ for city in cities:
       dic['locationName']=dic['locationName'].encode('ascii','ignore')
       events.append(dic)
       maindic_meetup[city]=events
-  except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
+  except httplib.BadStatusLine:
+    print 0
+  except urllib2.HTTPError:
+    print 0
+  except urllib2.URLError:
     print 0
   print "==================="+city+" meetup =========================="  
 with open('events_meetup.json', 'w') as outfile:

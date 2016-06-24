@@ -83,7 +83,7 @@ for city in cities:
 		        if 'lazy_image' in data['tables'][0]['results'][i]:
 		        	image_link=data['tables'][0]['results'][i]['lazy_image']
 		        else:
-		        	image_link=None
+		        	image_link="http://az771537.vo.msecnd.net/new/images/logonew.png"
 		        if start_date:
 		       		str_date=datetime.datetime.strptime(start_date,"%a %b %d %Y")
 		        if start_time:
@@ -94,10 +94,10 @@ for city in cities:
 		        	stop_date=datetime.datetime.strptime(stop_date[1], " %a %b %d %Y")
 		        if stop_time:
 		        	stop_time=datetime.datetime.strptime(stop_time, "%H:%M %p")	
-		        dic['str_time']=str_time
-		        dic['str_date']=str_date
-		        dic['stop_date']=stop_date
-		        dic['stop_time']=stop_time
+		        dic['str_time']=str(str_time)
+		        dic['str_date']=str(str_date)
+		        dic['stop_date']=str(stop_date)
+		        dic['stop_time']=str(stop_time)
 		        dic['image']=image_link
 		        dic['description']=description
 		        dic['eventLink']=link
@@ -114,10 +114,12 @@ for city in cities:
 		        	break	
 		        events.append(dic)
 		        maindic_allevents[city]=events
-
-
-		except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
-  			print 0  		        
+		except httplib.BadStatusLine:
+			print 0
+		except urllib2.HTTPError:
+			print 0
+		except urllib2.URLError:
+			print 0
 	if j==0:
 		print "No Events Available Right now for "+city
 	else:

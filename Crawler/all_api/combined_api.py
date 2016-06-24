@@ -15,14 +15,43 @@ with open('details.json') as basic_details:
 				all_cities.append(city)	
 
 print all_cities  
-from startupsclub_api import maindic_startupsclub
-from eventful_api import maindic_eventful
-from eventBrite_api import maindic_eventBrite
-from meetup_api import maindic_meetup
-from Graph_api import maindic_Graph
-from eventsHigh_api import maindic_eventsHigh
-from allevents_api import maindic_allevents
-all_dics=[maindic_eventful,maindic_meetup,maindic_startupsclub,maindic_eventBrite,maindic_eventsHigh,maindic_allevents,maindic_Graph]
+all_dics=[]
+try:
+	from startupsclub_api import maindic_startupsclub
+	all_dics.append(maindic_startupsclub)
+except ImportError:
+	print "startupsclub error "
+try:
+	from eventful_api import maindic_eventful
+	all_dics.append(maindic_eventful)
+except ImportError:
+	print "eventful error"
+try:
+	from eventBrite_api import maindic_eventBrite
+	all_dics.append(maindic_eventBrite)
+except ImportError:
+	print "eventBrite error"
+try:
+	from meetup_api import maindic_meetup
+	all_dics.append(maindic_meetup)
+except ImportError:
+	print "meetup error"
+try:		
+	from Graph_api import maindic_Graph
+	all_dics.append(maindic_Graph)
+except ImportError:
+	print "Graph error"
+try:
+	from eventsHigh_api import maindic_eventsHigh
+	all_dics.append(maindic_eventsHigh)
+except ImportError:
+	print "eventsHigh error"
+'''try:
+	from allevents_api import maindic_allevents
+	all_dics.append(maindic_allevents)
+except ImportError:
+	print "allevents error"	'''
+
 for city in all_cities:
 	all_events=[]
 	duplicate=0
@@ -40,5 +69,8 @@ for city in all_cities:
 			all_events=all_events+dics[city]
 	main_dic[city]=all_events
 	print " ***********************"+ "  "+str(duplicate)
+	with open('events_'+city+'.json', 'w') as outfile:
+		json.dump(main_dic[city], outfile,ensure_ascii=False)
+
 with open('events.json', 'w') as outfile:
 	json.dump(main_dic, outfile,ensure_ascii=False)

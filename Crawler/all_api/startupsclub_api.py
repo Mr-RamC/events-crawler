@@ -93,7 +93,7 @@ for city in cities:
 		        dic['str_time']=str(str_time)[11:]
 
 		        dic['name']=data['tables'][0]['results'][i]['link/_text']
-		        dic['image']=None
+		        dic['image']="http://startupsclub.org/wp-content/uploads/2015/06/logo_head.png"
 		        dic['isReservationRequired']=data['tables'][0]['results'][i]['eventrate_values']
 		        
 		        address=address.encode('ascii','ignore')
@@ -107,12 +107,16 @@ for city in cities:
 		        dic['locationName']=dic['locationName'].encode('ascii','ignore')
 		        events.append(dic)
 		        maindic_startupsclub[city]=events
-	except httplib.BadStatusLine and urllib2.URLError and urllib2.HTTPError:
-  		print 0  		        
+	except httplib.BadStatusLine:
+		print 0
+	except urllib2.HTTPError:
+		print 0
+	except urllib2.URLError:
+		print 0	        
 	if j==0:
 		print "No Events Available Right now for "+city
 	else:
 		print "==================== "+str(j)+"======================="
 	print "==================="+city+"startupsclub =========================="	
 with open('events_startupsclub.json', 'w') as outfile:
-	json.dump(events, outfile,ensure_ascii=False)
+	json.dump(maindic_startupsclub, outfile,ensure_ascii=False)

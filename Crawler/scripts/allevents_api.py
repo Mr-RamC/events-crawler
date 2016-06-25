@@ -5,6 +5,7 @@ from pprint import pprint
 import datetime
 import time
 from bs4 import BeautifulSoup
+import os
 # for delhi put city name new delhi
 cities=[]
 with open('details.json') as basic_details:    
@@ -12,6 +13,7 @@ with open('details.json') as basic_details:
 	cities=d['allevents']['cities']
 	token=d['allevents']['token']
 	api_url=d['allevents']['url']
+	def_img=d['allevents']['image']
 print cities 
 maindic_allevents={}
 for city in cities:
@@ -83,7 +85,7 @@ for city in cities:
 		        if 'lazy_image' in data['tables'][0]['results'][i]:
 		        	image_link=data['tables'][0]['results'][i]['lazy_image']
 		        else:
-		        	image_link="http://az771537.vo.msecnd.net/new/images/logonew.png"
+		        	image_link=def_img
 		        if start_date:
 		       		str_date=datetime.datetime.strptime(start_date,"%a %b %d %Y")
 		        if start_time:
@@ -124,6 +126,8 @@ for city in cities:
 		print "No Events Available Right now for "+city
 	else:
 		print "==================== "+str(j)+"======================="
-	print "==================="+city+" allevents =========================="	
+	print "==================="+city+" allevents =========================="
+os.chdir('C:\Users\sk972\Crawler\events_list')		
 with open('events__allevents.json', 'w') as outfile:
 	json.dump(maindic_allevents, outfile,ensure_ascii=False)
+os.chdir('C:\Users\sk972\Crawler\scripts')

@@ -1,4 +1,5 @@
 import json
+import os
 all_cities=[]
 
 main_dic={}
@@ -14,44 +15,51 @@ with open('details.json') as basic_details:
 			else:
 				all_cities.append(city)	
 
-print all_cities  
+print all_cities
 all_dics=[]
 try:
 	from startupsclub_api import maindic_startupsclub
 	all_dics.append(maindic_startupsclub)
-except ImportError:
+except Exception:
 	print "startupsclub error "
+	pass
 try:
 	from eventful_api import maindic_eventful
 	all_dics.append(maindic_eventful)
-except ImportError:
+except Exception:
 	print "eventful error"
+	pass
 try:
 	from eventBrite_api import maindic_eventBrite
 	all_dics.append(maindic_eventBrite)
-except ImportError:
+except Exception:
 	print "eventBrite error"
+	pass
 try:
 	from meetup_api import maindic_meetup
 	all_dics.append(maindic_meetup)
-except ImportError:
+except Exception:
 	print "meetup error"
+	pass
 try:		
 	from Graph_api import maindic_Graph
 	all_dics.append(maindic_Graph)
-except ImportError:
+except Exception:
 	print "Graph error"
+	pass
 try:
 	from eventsHigh_api import maindic_eventsHigh
 	all_dics.append(maindic_eventsHigh)
-except ImportError:
+except Exception:
 	print "eventsHigh error"
+	pass
 '''try:
 	from allevents_api import maindic_allevents
 	all_dics.append(maindic_allevents)
-except ImportError:
-	print "allevents error"	'''
-
+except Exception:
+	print "allevents error"
+	pass	'''
+os.chdir('C:\Users\sk972\Crawler\events_list')
 for city in all_cities:
 	all_events=[]
 	duplicate=0

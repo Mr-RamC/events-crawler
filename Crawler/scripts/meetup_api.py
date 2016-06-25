@@ -3,6 +3,7 @@ import json
 import httplib
 from pprint import pprint
 import datetime
+import os
 
 
 cities=[]
@@ -11,6 +12,7 @@ with open('details.json') as basic_details:
   cities=d['meetupApi']['cities']
   token=d['meetupApi']['token']
   api_url=d['meetupApi']['url']
+  def_img=d['meetupApi']['image']
 print cities  
 maindic_meetup={}
 for city in cities:
@@ -69,7 +71,7 @@ for city in cities:
       if 'photo_url' in data['results'][i]:
         dic['image']=data['results'][i]['photo_url']
       else:
-        dic['image']="http://img1.meetupstatic.com/img/94156887029318281691566697/logo.svg"
+        dic['image']=def_img
       if description!=None:
         if description.find("registration")==-1:
           dic['isReservationRequired']=False
@@ -114,5 +116,7 @@ for city in cities:
   except urllib2.URLError:
     print 0
   print "==================="+city+" meetup =========================="  
+os.chdir('C:\Users\sk972\Crawler\events_list')  
 with open('events_meetup.json', 'w') as outfile:
   json.dump(maindic_meetup, outfile,ensure_ascii=False)
+os.chdir('C:\Users\sk972\Crawler\scripts')

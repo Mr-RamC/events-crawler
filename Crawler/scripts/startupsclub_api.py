@@ -4,6 +4,7 @@ import httplib
 from pprint import pprint
 import datetime
 import time
+import os
 
 cities=[]
 with open('details.json') as basic_details:    
@@ -11,6 +12,7 @@ with open('details.json') as basic_details:
 	cities=d['startupsclub']['cities']
 	token=d['startupsclub']['token']
 	api_url=d['startupsclub']['url']
+	def_img=d['startupsclub']['image']
 print cities 
 maindic_startupsclub={}
 for city in cities:
@@ -93,7 +95,7 @@ for city in cities:
 		        dic['str_time']=str(str_time)[11:]
 
 		        dic['name']=data['tables'][0]['results'][i]['link/_text']
-		        dic['image']="http://startupsclub.org/wp-content/uploads/2015/06/logo_head.png"
+		        dic['image']=def_img
 		        dic['isReservationRequired']=data['tables'][0]['results'][i]['eventrate_values']
 		        
 		        address=address.encode('ascii','ignore')
@@ -117,6 +119,8 @@ for city in cities:
 		print "No Events Available Right now for "+city
 	else:
 		print "==================== "+str(j)+"======================="
-	print "==================="+city+"startupsclub =========================="	
+	print "==================="+city+"startupsclub =========================="
+os.chdir('C:\Users\sk972\Crawler\events_list')	
 with open('events_startupsclub.json', 'w') as outfile:
 	json.dump(maindic_startupsclub, outfile,ensure_ascii=False)
+os.chdir('C:\Users\sk972\Crawler\scripts')	

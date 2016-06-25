@@ -5,6 +5,7 @@ from pprint import pprint
 import datetime
 import time
 from bs4 import BeautifulSoup
+import os
 
 cities=[]
 with open('details.json') as basic_details:    
@@ -12,6 +13,7 @@ with open('details.json') as basic_details:
 	cities=d['eventsHigh']['cities']
 	token=d['eventsHigh']['token']
 	api_url=d['eventsHigh']['url']
+	def_img=d['eventsHigh']['image']
 print cities 
 maindic_eventsHigh={}
 for city in cities:
@@ -117,7 +119,7 @@ for city in cities:
 #	        img = soup.find("div", class_="details-non-blur-image-container no-crop")
 #	        image_link=img.a["href"]
 
-	        image_link="https://www.eventshigh.com/assets/images/logor.png"
+	        image_link=def_img
 	        dic['image']=image_link
 	        dic['description']=description
 	        dic['eventLink']=link
@@ -135,5 +137,7 @@ for city in cities:
 	else:
 		print "==================== "+str(j)+"======================="
 	print "==================="+city+" eventshigh =========================="	
+os.chdir('C:\Users\sk972\Crawler\events_list')
 with open('events_eventsHigh.json', 'w') as outfile:
-	json.dump(maindic_eventsHigh, outfile,ensure_ascii=False)     
+	json.dump(maindic_eventsHigh, outfile,ensure_ascii=False)
+os.chdir('C:\Users\sk972\Crawler\scripts')	     
